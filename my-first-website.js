@@ -67,3 +67,18 @@ document.getElementById('discordLogin').addEventListener('click', () => {
   window.location.href = discordAuthUrl;
 });
 */
+
+/* Защита кода уровня "школьники не найдут" */
+// Запретить ПКМ
+document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+// Запретить F12, Ctrl+Shift+I и др.
+document.addEventListener('keydown', (e) => {
+  if (e.key === "F12" || 
+      (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "C" || e.key === "J")) ||
+      (e.ctrlKey && e.key === "U")) {
+    e.preventDefault();
+  }
+});
+// Запретить выделение текста
+document.addEventListener('selectstart', (e) => e.preventDefault());
