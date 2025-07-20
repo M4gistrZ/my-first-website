@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 app.get('/auth/discord', async (req, res) => {
   const code = req.query.code;
     if (!code) {
-    return res.redirect('http://localhost:5000?auth=cancelled');
+    return res.redirect('https://my-first-website-5u8b.onrender.com?auth=cancelled');
     }
 
 
@@ -51,4 +51,4 @@ app.get('/auth/discord', async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log('✅ Сервер запущен на http://localhost:3000'));
+app.listen(3000, () => console.log('✅ Сервер запущен!'));

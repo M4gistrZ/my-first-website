@@ -67,7 +67,7 @@ modal.addEventListener('click', (e) => {
 
 /* === DISCORD АВТОРИЗАЦИЯ === */
 const clientId = "1395739526684479538"; 
-const serverUrl = "http://localhost:3000";
+const serverUrl = "https://my-first-website-5u8b.onrender.com/";
 
 document.getElementById('discordLogin').addEventListener('click', () => {
   const redirectUri = `${serverUrl}/auth/discord`;

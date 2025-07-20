@@ -1,7 +1,7 @@
 body {
   background: url('image.png') no-repeat center center fixed;
-  background-position: 49% center; /* сдвигаем чуть влево */
-  background-size: clamp(200px, 40vw, 700px); /* 🔥 магия */
+  background-position: 49% center;
+  background-size: clamp(200px, 40vw, 700px); 
   background-color: #111;
   color: white;
   font-family: Arial, sans-serif;
