@@ -19,8 +19,9 @@ app.get('/', (req, res) => {
 app.get('/auth/discord', async (req, res) => {
   const code = req.query.code;
     if (!code) {
-    return res.redirect('https://my-first-website-5u8b.onrender.com?auth=cancelled');
-    }
+  return res.redirect(`${process.env.DISCORD_REDIRECT_FRONT || '/' }?auth=cancelled`);
+}
+
 
 
   try {
@@ -44,7 +45,7 @@ app.get('/auth/discord', async (req, res) => {
       headers: { Authorization: `Bearer ${accessToken}` }
     });
 
-    res.redirect(`http://localhost:5000?username=${encodeURIComponent(userResponse.data.username)}&avatar=${encodeURIComponent(`https://cdn.discordapp.com/avatars/${userResponse.data.id}/${userResponse.data.avatar}.png`)}`);
+    res.redirect(`https://my-first-website-5u8b.onrender.com?username=${encodeURIComponent(userResponse.data.username)}&avatar=${encodeURIComponent(`https://cdn.discordapp.com/avatars/${userResponse.data.id}/${userResponse.data.avatar}.png`)}`);
   } catch (err) {
     console.error(err.response?.data || err);
     res.status(500).json({ error: 'Auth failed' });
