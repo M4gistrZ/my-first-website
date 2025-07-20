@@ -4,42 +4,44 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ННН</title>
+  <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="my-first-website.css">
 </head>
 <body>
 
   <!-- Секретная кнопка -->
-  <button class="hidden-button"></button>
+  <button class="hidden-button" aria-label="Секретная кнопка"></button>
 
   <!-- Модальное окно -->
   <div class="modal" id="discordModal">
-  <div class="modal-content">
-    <span class="close-btn" id="closeModal">&times;</span>
-    <img 
-      src="discord.png" 
-      alt="Войти через Discord" 
-      id="discordLogin"
-      class="discord-logo">
+    <div class="modal-content">
+      <span class="close-btn" id="closeModal">&times;</span>
+      <h2 id="modalTitle">Войти через Discord</h2>
+      <img 
+        src="discord.png" 
+        alt="Войти через Discord" 
+        id="discordLogin"
+        class="discord-logo">
+    </div>
   </div>
-</div>
 
   <!-- Буквы -->
-  <div class="container">
-    <div class="letter-block">
-      <span class="big-letter">Н</span>
-      <div class="hidden-text" data-text="Осколок Ночного Аметиста"></div>
+  <main class="container">
+    <div class="letter-block" data-text="Осколок Ночного Аметиста">
+      <span class="big-letter"> Н</span>
+      <div class="hidden-text"></div>
     </div>
 
-    <div class="letter-block">
-      <span class="big-letter">Н</span>
-      <div class="hidden-text" data-text="Ночной Аметист"></div>
+    <div class="letter-block" data-text="Ночной Аметист">
+      <span class="big-letter"> Н</span>
+      <div class="hidden-text"></div>
     </div>
 
-    <div class="letter-block">
-      <span class="big-letter">Н</span>
-      <div class="hidden-text" data-text="Росток Ночного Аметиста"></div>
+    <div class="letter-block" data-text="Росток Ночного Аметиста">
+      <span class="big-letter"> Н</span>
+      <div class="hidden-text"></div>
     </div>
-  </div>
+  </main>
 
   <script src="my-first-website.js"></script>
 </body>

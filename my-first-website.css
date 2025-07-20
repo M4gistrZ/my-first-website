@@ -1,6 +1,7 @@
 body {
   background: url('image.png') no-repeat center center fixed;
-  background-size: contain;
+  background-position: 49% center; /* сдвигаем чуть влево */
+  background-size: clamp(200px, 40vw, 700px); /* 🔥 магия */
   background-color: #111;
   color: white;
   font-family: Arial, sans-serif;
@@ -9,16 +10,29 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
+  flex-direction: column;
 }
+/*
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  background: red;
+  z-index: 9999;
+}
+*/
 
 /* Секретная кнопка */
 .hidden-button {
   position: absolute;
-  top: 50px;
-  left: 50px;
-  width: 100px;
-  height: 50px;
-  background: #111;
+  top: 20px;
+  left: 20px;
+  width: 80px;
+  height: 40px;
+  background: transparent;
   border: none;
   cursor: pointer;
 }
@@ -34,7 +48,6 @@ body {
   background: rgba(0, 0, 0, 0.6);
   justify-content: center;
   align-items: center;
-  pointer-events: auto;
   z-index: 1000;
 }
 
@@ -45,6 +58,7 @@ body {
   text-align: center;
   color: white;
   position: relative;
+  width: 300px;
 }
 
 .close-btn {
@@ -58,10 +72,6 @@ body {
 
 body.modal-open {
   overflow: hidden;
-  pointer-events: none;
-}
-body.modal-open .modal {
-  pointer-events: auto;
 }
 
 .discord-logo {
@@ -76,11 +86,11 @@ body.modal-open .modal {
   transform: scale(1.1);
 }
 
-
 /* Буквы */
 .container {
   display: flex;
-  gap: 50px;
+  gap: 30px;
+  flex-wrap: wrap;
 }
 
 .letter-block {
@@ -90,7 +100,7 @@ body.modal-open .modal {
 }
 
 .big-letter {
-  font-size: 100px;
+  font-size: clamp(60px, 10vw, 100px);
   font-weight: bold;
   color: #4CAF50;
   transition: transform 0.3s ease, color 0.3s ease;

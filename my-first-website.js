@@ -1,35 +1,44 @@
-/* === ЭФФЕКТ ПЕЧАТИ НА БУКВАХ === */
+/* === ЭФФЕКТ ПЕЧАТИ (фикс бага + мигание перед началом) === */
 document.querySelectorAll('.letter-block').forEach(block => {
+  const text = block.dataset.text;
   const textEl = block.querySelector('.hidden-text');
-  const text = textEl.dataset.text;
   let typing = false;
+  let currentTimeouts = [];
+
+  function clearTyping() {
+    currentTimeouts.forEach(t => clearTimeout(t));
+    currentTimeouts = [];
+    typing = false;
+  }
 
   block.addEventListener('mouseenter', () => {
     if (typing) return;
     typing = true;
 
+    // Сначала только мигающий курсор
     textEl.innerHTML = '<span class="caret"></span>';
 
-    setTimeout(() => {
-      let i = 0;
-      function typeNextLetter() {
-        if (i < text.length) {
-          textEl.innerHTML = text.slice(0, i + 1) + '<span class="caret"></span>';
-          i++;
-          setTimeout(typeNextLetter, Math.random() * 100 + 50);
-        } else {
-          setTimeout(() => {
-            const caret = textEl.querySelector('.caret');
-            if (caret) caret.classList.add('hidden');
-          }, 500);
-        }
+    let i = 0;
+
+    function typeNextLetter() {
+      if (!typing) return;
+
+      if (i < text.length) {
+        textEl.innerHTML = text.slice(0, i + 1) + '<span class="caret"></span>';
+        i++;
+        currentTimeouts.push(setTimeout(typeNextLetter, Math.random() * 100 + 50));
+      } else {
+        const caret = textEl.querySelector('.caret');
+        if (caret) caret.classList.add('hidden');
       }
-      typeNextLetter();
-    }, 1000);
+    }
+
+    // ✅ 1 секунда мигания перед началом печати
+    currentTimeouts.push(setTimeout(typeNextLetter, 1000));
   });
 
   block.addEventListener('mouseleave', () => {
-    typing = false;
+    clearTyping();
     textEl.innerHTML = '';
   });
 });
@@ -56,29 +65,28 @@ modal.addEventListener('click', (e) => {
   }
 });
 
-/* === DISCORD АВТОРИЗАЦИЯ === 
-const clientId = "ТВОЙ_DISCORD_CLIENT_ID";
-const redirectUri = encodeURIComponent("https://твой-сайт.ru");
-const scope = encodeURIComponent("identify");
+/* === DISCORD АВТОРИЗАЦИЯ === */
+const clientId = "1395739526684479538"; 
+const serverUrl = "http://localhost:3000";
 
 document.getElementById('discordLogin').addEventListener('click', () => {
-  const discordAuthUrl =
-    `https://discord.com/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
+  const redirectUri = `${serverUrl}/auth/discord`;
+  const scope = "identify";
+  const discordAuthUrl = 
+    `https://discord.com/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${scope}`;
   window.location.href = discordAuthUrl;
 });
-*/
 
-/* Защита кода уровня "школьники не найдут" */
-// Запретить ПКМ
-document.addEventListener('contextmenu', (e) => e.preventDefault());
+/* === ОТОБРАЖЕНИЕ АВАТАРКИ ПОСЛЕ ЛОГИНА === */
+const params = new URLSearchParams(window.location.search);
+const username = params.get("username");
+const avatar = params.get("avatar");
 
-// Запретить F12, Ctrl+Shift+I и др.
-document.addEventListener('keydown', (e) => {
-  if (e.key === "F12" || 
-      (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "C" || e.key === "J")) ||
-      (e.ctrlKey && e.key === "U")) {
-    e.preventDefault();
-  }
-});
-// Запретить выделение текста
-document.addEventListener('selectstart', (e) => e.preventDefault());
+if (params.get("auth") === "cancelled") {
+  alert("Вы отменили авторизацию через Discord.");
+}
+if (username && avatar) {
+  document.getElementById('modalTitle').innerText = `Привет, ${username}!`;
+  document.getElementById('discordLogin').src = avatar;
+  modal.style.display = 'flex';
+}
